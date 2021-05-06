@@ -427,7 +427,7 @@ template <class Op> struct wrap_eigen : Op {
       return Op::template operator()(std::forward<Ts>(args)...);
   }
 };
-template <class... Ts> wrap_eigen(Ts...) -> wrap_eigen<Ts...>;
+template <class Op> wrap_eigen(Op) -> wrap_eigen<Op>;
 } // namespace detail
 
 template <class... Ts, class Op>
