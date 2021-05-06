@@ -82,12 +82,13 @@ template <class> struct is_array : std::false_type {};
 template <class T, size_t N>
 struct is_array<std::array<T, N>> : std::true_type {};
 
+template <class T, class> using pass_through = T;
+
 /// Typedef for T if T is a tuple, else std::tuple<T, T, T, ...>, with T
 /// replicated sizeof...(V) times.
 template <class T, class... V>
-using maybe_duplicate =
-    std::conditional_t<is_tuple<T>::value, T,
-                       std::tuple<std::conditional_t<true, T, V>...>>;
+using maybe_duplicate = std::conditional_t<is_tuple<T>::value, T,
+                                           std::tuple<pass_through<T, V>...>>;
 } // namespace visit_detail
 
 /// Apply callable to variants, similar to std::visit.
