@@ -54,7 +54,7 @@ decltype(auto) invoke(F &&f, V &&... v) {
                  get_args(std::tuple_element_t<0, std::tuple<Tuple...>>{},
                           std::forward<V>(v)...)));
 
-  if constexpr (!std::is_same_v<void, Ret>) {
+  if constexpr (!std::is_void_v<Ret>) {
     Ret ret;
     if (!((holds_alternatives(Tuple{}, v...)
                ? (ret = std::apply(std::forward<F>(f),
